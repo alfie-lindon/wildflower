@@ -1,49 +1,69 @@
+import { useState } from "react"
 import { Link } from "react-router-dom"
-import logo from '@/assets/wf_logoword.png'
+import logo from '@/assets/wf_logo.png'
 import {
   FaCartShopping,
-  FaRegCircleUser
+  FaRegCircleUser,
 } from 'react-icons/fa6'
+import { MdMenu } from 'react-icons/md'
 
 const UserNavBar = () => {
+  const [open, setOpen] = useState(false)
+
   return (
-    <nav className="fixed top-0 left-0 w-full bg-white">
-      <div className="container mx-auto flex justify-between items-center p-7">
+    <nav className="fixed top-0 left-0 w-full bg-white z-50">
+      <div className="mx-auto flex justify-between items-center p-5">
 
         {/* Logo */}
-        <div className="flex">
+        <div className="flex items-center">
           <Link to="/">
-            <img src={logo} alt="Logo" className="w-40" />
+            <img src={logo} alt="Logo" className="w-12 md:w-10" />
           </Link>
         </div>
 
-        {/* NavLinks */}
-        <div className="flex gap-18 pr-20 font-didone text-xl text-primaryText">
-          <Link to="#products" className="relative hover:underline">Products</Link>
-          <Link to="#about" className="relative hover:underline">About</Link>
-          <Link to="#deals" className="relative hover:underline">Deals</Link>
-          <Link to="#location" className="relative hover:underline">Location</Link>
+        {/* Desktop NavLinks */}
+        <div className="hidden md:flex gap-10 font-didone text-xl text-primaryText">
+          <Link to="#products" className="hover:underline">Products</Link>
+          <Link to="#about" className="hover:underline">About</Link>
+          <Link to="#deals" className="hover:underline">Deals</Link>
+          <Link to="#location" className="hover:underline">Location</Link>
         </div>
 
-        {/* Cart and User */}
-        <div className="relative flex gap-6">
+        {/* Desktop Icons */}
+        <div className="hidden md:flex gap-6">
           <button>
             <FaCartShopping className="text-2xl" />
           </button>
-          <button >
+          <button>
+            <FaRegCircleUser className="text-2xl" />
+          </button>
+        </div>
+
+        {/* Mobile Menu Button */}
+        <div className="md:hidden flex items-center gap-4">
+          <button>
+            <FaCartShopping className="text-2xl" />
+          </button>
+
+          <button>
             <FaRegCircleUser className="text-2xl" />
           </button>
 
-          {/* <div 
-            v-if="isOpen"
-            className="absolute right-0.5 mt-12 w-40 bg-white border border-gray-300 rounded-lg shadow-lg p-2 flex flex-col"
-          >
-            <Link to="/auth/login" className="text-left px-3 py-2 hover:bg-gray-100 rounded">Sign In</Link>
-            <Link to="/auth/signup" className="text-left px-3 py-2 hover:bg-gray-100 rounded">Sign Up</Link>
-          </div> */}
+          <button className="md:hidden" onClick={() => setOpen(!open)}>
+            <MdMenu className="text-3xl" />
+          </button>
         </div>
-
       </div>
+
+      {/* Mobile Dropdown Menu */}
+      {open && (
+        <div className="font-didone text-primaryText md:hidden flex flex-col items-center gap-4 py-4 border-t bg-white">
+          <Link to="#products" onClick={() => setOpen(false)}>Products</Link>
+          <Link to="#about" onClick={() => setOpen(false)}>About</Link>
+          <Link to="#deals" onClick={() => setOpen(false)}>Deals</Link>
+          <Link to="#location" onClick={() => setOpen(false)}>Location</Link>
+        </div>
+      )}
     </nav>
   )
 }

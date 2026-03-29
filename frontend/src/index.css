@@ -16,3 +16,8 @@
  --font-playfair: "Playfair Display", "sans-serif";
  --font-lora: "Lora", "sans-serif";
 }
+
+html, body {
+  overflow-x: hidden;
+  background: var(--color-brand);
+}

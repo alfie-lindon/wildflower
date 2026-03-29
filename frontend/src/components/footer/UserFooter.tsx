@@ -1,10 +1,15 @@
+import logo from '@/assets/wf_logo.png'
+
 const UserFooter = () => {
   return (
-    <footer className="bg-white py-12 px-30">
-      <div className="flex justify-between">
+    <footer className="bg-white py-6 md:py-12 px-4 md:px-30">
+      <div className="flex flex-col md:flex-row items-center md:items-start justify-between text-center md:text-left gap-8">
+
         {/* Left Section */}
-        <div className="flex flex-col justify-between gap-6">
-          <div className="flex gap-20">
+        <div className="flex flex-col justify-between gap-6 items-center md:items-start">
+
+          <div className="flex flex-col md:flex-row gap-10 md:gap-20 items-center md:items-start">
+
             {/* Follow Us */}
             <div>
               <p className="font-playfair">
@@ -31,20 +36,23 @@ const UserFooter = () => {
                 Metro Manila, Quezon City 1127
               </p>
             </div>
+
           </div>
 
           <p className="mt-2">
-            2025 Wildflower Brewing Co.
+            @2025 Wildflower Brewing Co.
           </p>
         </div>
+
         {/* Right Section */}
-        <div>
+        <div className="hidden md:block">
           <img
-            src="@/assets/wf_logo.png"
+            src={logo}
             alt="Footer logo"
             className="w-40"
           />
         </div>
+
       </div>
     </footer>
   )
