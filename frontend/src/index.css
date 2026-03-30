@@ -10,7 +10,9 @@
 @theme{
  --color-primaryText: #2C473C;
  --color-brand: #F7F4EB;
+ --color-brandLight: #FEF3C7;
  --color-burgundy: #6F1A25;
+ --color-burgundyDark: #461017;
  --color-gold: #A87C49;
  --font-didone: "Didone", "sans-serif";
  --font-playfair: "Playfair Display", "sans-serif";
@@ -20,4 +22,5 @@
 html, body {
   overflow-x: hidden;
   background: var(--color-brand);
+  scroll-behavior: smooth;
 }

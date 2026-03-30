@@ -6,8 +6,8 @@ const OurProducts = () => {
   return (
     <div id="deals" className="pt-30 w-[80%]">
       <div className="text-center pb-20">
-        <p className="text-[54px] md:text-[64px] font-playfair font-bold text-primaryText">Our Products</p>
-        <p className="text-[30px] md:text-[40px] font-playfair italic text-primaryText">Crafted with Precision</p>
+        <p className="text-[44px] md:text-[54px] font-playfair font-bold text-primaryText">Our Products</p>
+        <p className="text-[28px] md:text-[30px] font-playfair italic text-primaryText">Crafted with Precision</p>
       </div>
 
       {/* Will loop through latest products from backend in future */}
@@ -50,7 +50,7 @@ const OurProducts = () => {
       </div>
 
       <div className="text-center mt-10 mb-20">
-        <Link to="/products" className="text-[25px] font-lora text-gold hover:underline">View More</Link>
+        <Link to="/products" className="text-[20px] md:text-[25px] font-lora text-gold hover:underline">View More</Link>
       </div>
     </div>
   )

@@ -23,10 +23,10 @@ const UserNavBar = () => {
 
         {/* Desktop NavLinks */}
         <div className="hidden md:flex gap-10 font-didone text-xl text-primaryText">
-          <Link to="#products" className="hover:underline">Products</Link>
-          <Link to="#about" className="hover:underline">About</Link>
-          <Link to="#deals" className="hover:underline">Deals</Link>
-          <Link to="#location" className="hover:underline">Location</Link>
+          <Link to="/products" className="hover:underline">Products</Link>
+          <a href="#about" className="hover:underline">About</a>
+          <a href="#deals" className="hover:underline">Deals</a>
+          <a href="#footer" className="hover:underline">Location</a>
         </div>
 
         {/* Desktop Icons */}

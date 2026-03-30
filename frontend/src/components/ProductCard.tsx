@@ -8,7 +8,7 @@ interface ProductProps {
 const ProductCard = ({productImage, name, details, price}: ProductProps) => {
   return (
     <>
-      <a href="#modal" className="text-[20px] md:text-[25px] p-6 rounded-xl flex flex-col items-center text-center border-transparent hover:border-[#D4D4D4] border-3 group">
+      <a href="#modal" className="text-[20px] md:text-[25px] p-4 rounded-xl flex flex-col items-center text-center border-transparent hover:border-[#D4D4D4] border-3 group">
         <img src={productImage} alt="Product image" className="w-30" />
         <p className="font-lora font-bold text-primaryText">{name}</p>
         <p className="font-lora text-gold">{details}</p>

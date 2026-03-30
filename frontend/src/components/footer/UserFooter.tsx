@@ -1,8 +1,9 @@
 import logo from '@/assets/wf_logo.png'
+import { FaFacebookF, FaInstagram } from 'react-icons/fa'
 
 const UserFooter = () => {
   return (
-    <footer className="bg-white py-6 md:py-12 px-4 md:px-30">
+    <footer id='footer' className="bg-white py-6 md:py-12 px-4 md:px-30">
       <div className="flex flex-col md:flex-row items-center md:items-start justify-between text-center md:text-left gap-8">
 
         {/* Left Section */}
@@ -11,7 +12,7 @@ const UserFooter = () => {
           <div className="flex flex-col md:flex-row gap-10 md:gap-20 items-center md:items-start">
 
             {/* Follow Us */}
-            <div>
+            <div className='hidden md:block'>
               <p className="font-playfair">
                 <b>Follow us</b><br />
                 Facebook<br />
@@ -39,7 +40,13 @@ const UserFooter = () => {
 
           </div>
 
-          <p className="mt-2">
+          {/* Social icons for mobile */}
+          <div className='md:hidden flex gap-4 text-2xl'>
+            <FaFacebookF />
+            <FaInstagram />
+          </div>
+
+          <p className="md:mt-30">
             @2025 Wildflower Brewing Co.
           </p>
         </div>
