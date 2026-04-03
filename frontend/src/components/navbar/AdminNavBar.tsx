@@ -1,6 +1,8 @@
 const AdminNavBar = () => {
   return (
-    <div>AdminNavBar</div>
+    <nav className="w-full bg-white h-16 flex items-center px-4 shadow text-xl font-bold text-primaryText">
+      Dashboard
+    </nav>
   )
 }
 
