@@ -11,13 +11,21 @@ import Login from "./pages/auth/Login";
 import SignUp from "./pages/auth/SignUp";
 import ResetPassword from "./pages/auth/ResetPassword";
 import AdminLayout from "./layouts/AdminLayout";
-import Dashboard from "./pages/admin/Dashboard";
+import Dashboard from "./pages/admin/dashboard/Dashboard";
+import Users from "./pages/admin/users/Users";
+import AdminProducts from "./pages/admin/products/AdminProducts";
+import Orders from "./pages/admin/orders/Orders";
+import Settings from "./pages/admin/settings/Settings";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/admin" element={ <AdminLayout /> } >
         <Route path="dashboard" element={ <Dashboard /> } />
+        <Route path="users" element={ <Users /> } />
+        <Route path="products" element={ <AdminProducts /> } />
+        <Route path="orders" element={ <Orders /> } />
+        <Route path="settings" element={ <Settings /> } />
       </Route>
 
       <Route path="/" element={ <UserLayout /> } >
