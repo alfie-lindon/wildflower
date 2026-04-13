@@ -1,6 +1,8 @@
+import Table from "../../../components/Table"
+
 const Users = () => {
   return (
-    <div>Users</div>
+    <Table />
   )
 }
 
