@@ -6,6 +6,7 @@
 }
 
 @import "tailwindcss";
+@plugin "daisyui";
 
 @theme{
  --color-primaryText: #2C473C;

@@ -1,4 +1,3 @@
-import { useState } from "react"
 import { Link } from "react-router-dom"
 import logo from '@/assets/wf_logo.png'
 import {
@@ -8,8 +7,6 @@ import {
 import { MdMenu } from 'react-icons/md'
 
 const UserNavBar = () => {
-  const [open, setOpen] = useState(false)
-
   return (
     <nav className="fixed top-0 left-0 w-full bg-white z-50">
       <div className="mx-auto flex justify-between items-center p-5">
@@ -34,9 +31,15 @@ const UserNavBar = () => {
           <button>
             <FaCartShopping className="text-2xl" />
           </button>
-          <button>
-            <FaRegCircleUser className="text-2xl" />
-          </button>
+          <div className="dropdown dropdown-end">
+            <div tabIndex={0}>
+              <FaRegCircleUser className="text-2xl" />
+            </div>
+            <ul tabIndex={-1} className="dropdown-content menu bg-base-100 rounded-box z-1 w-32 p-2 shadow-sm mt-5">
+              <li><Link to="/auth/login">Login</Link></li>
+              <li><Link to="/auth/signup">Register</Link></li>
+            </ul>
+          </div>
         </div>
 
         {/* Mobile Menu Button */}
@@ -45,25 +48,29 @@ const UserNavBar = () => {
             <FaCartShopping className="text-2xl" />
           </button>
 
-          <button>
-            <FaRegCircleUser className="text-2xl" />
-          </button>
+          <div className="dropdown dropdown-center">
+            <div tabIndex={0}>
+              <FaRegCircleUser className="text-2xl" />
+            </div>
+            <ul tabIndex={-1} className="dropdown-content menu bg-base-100 rounded-box z-1 w-32 p-2 shadow-sm mt-5">
+              <li><Link to="/auth/login">Login</Link></li>
+              <li><Link to="/auth/signup">Register</Link></li>
+            </ul>
+          </div>
 
-          <button className="md:hidden" onClick={() => setOpen(!open)}>
-            <MdMenu className="text-3xl" />
-          </button>
+          <div className="md:hidden dropdown dropdown-end">
+            <div tabIndex={0}>
+              <MdMenu className="text-3xl" />
+            </div>
+            <ul tabIndex={-1} className="dropdown-content menu bg-base-100 rounded-box z-1 w-32 p-2 shadow-sm mt-5">
+              <li><Link to="#products">Products</Link></li>
+              <li><Link to="#about">About</Link></li>
+              <li><Link to="#deals">Deals</Link></li>
+              <li><Link to="#location">Location</Link></li>
+            </ul>
+          </div>
         </div>
       </div>
-
-      {/* Mobile Dropdown Menu */}
-      {open && (
-        <div className="font-didone text-primaryText md:hidden flex flex-col items-center gap-4 py-4 border-t bg-white">
-          <Link to="#products" onClick={() => setOpen(false)}>Products</Link>
-          <Link to="#about" onClick={() => setOpen(false)}>About</Link>
-          <Link to="#deals" onClick={() => setOpen(false)}>Deals</Link>
-          <Link to="#location" onClick={() => setOpen(false)}>Location</Link>
-        </div>
-      )}
     </nav>
   )
 }
