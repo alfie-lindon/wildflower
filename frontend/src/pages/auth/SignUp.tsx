@@ -11,8 +11,11 @@ import {
 import { BsTelephone } from 'react-icons/bs'
 import api from "../../lib/axios"
 import axios from 'axios'
+import { setUser } from "../../store/slices/authSlice"
+import { useAppDispatch } from "../../store/hooks"
 
 const SignUp = () => {
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const [show, setShow] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -36,8 +39,9 @@ const SignUp = () => {
     setLoading(true)
 
     try {
-      const res = await api.post('/register', formData)
-      console.log(res.data)
+      const { data } = await api.post('/register', formData)
+      dispatch(setUser(data.user))
+      localStorage.setItem('token', data.token)
       navigate('/') //Back to home
     } catch (err) {
       if (axios.isAxiosError(err)) {

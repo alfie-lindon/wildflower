@@ -1,12 +1,18 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import logo from '@/assets/wf_logo.png'
 import {
   FaCartShopping,
   FaRegCircleUser,
 } from 'react-icons/fa6'
 import { MdMenu } from 'react-icons/md'
+import { useAppDispatch, useAppSelector } from "../../store/hooks"
+import { logoutUser } from "../../store/slices/authSlice"
 
 const UserNavBar = () => {
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const user = useAppSelector(state => state.auth.user)
+
   return (
     <nav className="fixed top-0 left-0 w-full bg-white z-50">
       <div className="mx-auto flex justify-between items-center p-5">
@@ -36,8 +42,27 @@ const UserNavBar = () => {
               <FaRegCircleUser className="text-2xl" />
             </div>
             <ul tabIndex={-1} className="dropdown-content menu bg-base-100 rounded-box z-1 w-32 p-2 shadow-sm mt-5">
-              <li><Link to="/auth/login">Login</Link></li>
-              <li><Link to="/auth/signup">Register</Link></li>
+              {user ? (
+                <>
+                  <li><Link to="">Profile</Link></li>
+                  <li><Link to="">Settings</Link></li>
+                  <li>
+                    <button
+                      onClick={async () => {
+                        await dispatch(logoutUser())
+                        localStorage.removeItem('token') 
+                        navigate('/auth/login')
+                      }}>
+                      Logout
+                    </button>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li><Link to="/auth/login">Login</Link></li>
+                  <li><Link to="/auth/signup">Register</Link></li>
+                </>
+              )}
             </ul>
           </div>
         </div>
@@ -47,14 +72,38 @@ const UserNavBar = () => {
           <button>
             <FaCartShopping className="text-2xl" />
           </button>
-
           <div className="dropdown dropdown-center">
             <div tabIndex={0}>
               <FaRegCircleUser className="text-2xl" />
             </div>
             <ul tabIndex={-1} className="dropdown-content menu bg-base-100 rounded-box z-1 w-32 p-2 shadow-sm mt-5">
-              <li><Link to="/auth/login">Login</Link></li>
-              <li><Link to="/auth/signup">Register</Link></li>
+              {
+                user ?
+                  (
+                    <>
+                      <li><Link to="">Profile</Link></li>
+                      <li><Link to="">Settings</Link></li>
+                      <li>
+                        <button 
+                          onClick={async () => {
+                              await dispatch(logoutUser())
+                              localStorage.removeItem('token') 
+                              navigate('/auth/login')
+                          }}>
+                            Logout
+                        </button>
+                      </li>
+                    </>
+                  )
+                :
+                  (
+                    <>
+                      <li><Link to="/auth/login">Login</Link></li>
+                      <li><Link to="/auth/signup">Register</Link></li>
+                    </>
+                  )
+              }
+              
             </ul>
           </div>
 

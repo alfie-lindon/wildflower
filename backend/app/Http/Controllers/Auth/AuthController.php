@@ -66,36 +66,57 @@ class AuthController extends Controller
         try{
             $validated = $request->validated();
 
-            if(Auth::attempt($validated)){
-                $request->session()->regenerate(); //Regenerate token for safety
-                
+            if(!Auth::attempt($validated)){
                 return response()->json([
-                    'message' => 'Logged in.'
-                ],200);
+                    'message' => 'Invalid Credentials.'
+                ], 401);
             }
 
+            $user = Auth::user();
+            $token = $user->createToken('auth_token')->plainTextToken;
+
             return response()->json([
-                'message' => 'Invalid Credentials.'
-            ],401);
+                'user' => $user,
+                'token' => $token
+            ],200);
         }catch(\Exception $e){
             return response()->json([
+                // 'success' => false,
+                // 'message' => 'An unexpected error occurred.'
                 'success' => false,
-                'message' => 'An unexpected error occurred.'
+                'message' => $e->getMessage(),
+                'line'    => $e->getLine(),
+                'file'    => $e->getFile(),
             ], 500);
         }
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
         try{
-            Auth::logout();
+            //This logout method is session based guard and will not work with sanctum
+            // We can use this if our routes does not use sanctum
+            // Auth::logout(); 
+
+            // Alternative when using sanctum
+
+            // **$request->user()** — gets the currently authenticated user via the Bearer token
+            // **->currentAccessToken()** — gets the specific token used in this request
+            // **->delete()** — removes it from the personal_access_tokens table in the database
+
+            $request->user()->currentAccessToken()->delete();
+
             return response()->json([
                 'message' => 'User logged out.'
             ],200);
         }catch(\Exception $e){
             return response()->json([
+                // 'success' => false,
+                // 'message' => 'An unexpected error occurred.'
                 'success' => false,
-                'message' => 'An unexpected error occurred.'
+                'message' => $e->getMessage(),
+                'line'    => $e->getLine(),
+                'file'    => $e->getFile(),
             ], 500);
         }
     }
