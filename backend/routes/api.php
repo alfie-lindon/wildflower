@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Auth;
 
 // Route::get('/user', function (Request $request) {
@@ -12,6 +13,13 @@ use Illuminate\Support\Facades\Auth;
 Route::get('/index', [AuthController::class, 'index']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
+
+// Product Routes, no middleware for now
+Route::get('/index', [ProductController::class, 'index']);
+Route::get('/getProductById/{product}', [ProductController::class, 'getProductById']);
+Route::post('/store', [ProductController::class, 'store']);
+Route::put('/update/{product}', [ProductController::class, 'update']);
+Route::post('/destroy/{product}', [ProductController::class, 'destroy']);
 
 Route::middleware('auth:sanctum')->group(function(){
     // Fetch User
