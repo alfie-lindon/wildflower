@@ -4,19 +4,22 @@ import api from "../../lib/axios";
 interface User {
   id: number,
   name: string,
-  email: string
+  email: string,
+  is_admin: boolean
 }
 
 interface AuthState {
   user: User | null,
   loading: boolean,
-  error: string | null
+  error: string | null,
+  isInitialized: boolean
 }
 
 const initialState: AuthState = {
   user: null,
   loading: false,
   error: null,
+  isInitialized: false
 }
 
 // Fetch authenticated user
@@ -54,6 +57,9 @@ const authSlice = createSlice ({
     },
     clearUser(state) {
       state.user = null
+    },
+    setInitialized: (state) => {
+      state.isInitialized = true
     }
   },
   extraReducers: (builders) => {
@@ -64,10 +70,12 @@ const authSlice = createSlice ({
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.user = action.payload
         state.loading = false
+        state.isInitialized = true
       })
       .addCase(fetchUser.rejected, (state) => {
         state.user = null
         state.loading = false
+        state.isInitialized = true
       })
       .addCase(logoutUser.fulfilled, (state) => {
         state.user = null
@@ -75,5 +83,5 @@ const authSlice = createSlice ({
   }
 })
 
-export const { setUser, clearUser} = authSlice.actions
+export const { setUser, clearUser,setInitialized} = authSlice.actions
 export default authSlice.reducer

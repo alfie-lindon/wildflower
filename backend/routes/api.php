@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthController;
@@ -10,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 //     return $request->user();
 // })->middleware('auth:sanctum');
 
-Route::get('/index', [AuthController::class, 'index']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
@@ -21,6 +21,12 @@ Route::post('/store', [ProductController::class, 'store']);
 Route::put('/update/{product}', [ProductController::class, 'update']);
 Route::post('/destroy/{product}', [ProductController::class, 'destroy']);
 
+// Admin Routes
+Route::middleware('auth:sanctum', 'admin')->group(function(){
+    Route::get('/admin/users', [AdminController::class, 'getUsers']);
+});
+
+// User Routes
 Route::middleware('auth:sanctum')->group(function(){
     // Fetch User
     Route::get('/user', function(){

@@ -44,10 +44,11 @@ class AuthController extends Controller
                 'password' => Hash::make($validated['password'])
             ]);
             // Login the user
-            Auth::login($user);
+            $token = $user->createToken('auth_token')->plainTextToken;
             // Return response
             return response()->json([
-                'rows' => $user,
+                'user' => $user,
+                'token' => $token,
                 'message' => "User created."
             ],201);
 

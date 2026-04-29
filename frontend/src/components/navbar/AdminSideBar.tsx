@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import { useState } from "react"
 import { MdOutlineSpaceDashboard, MdLogout } from "react-icons/md"
 import { FaUsers } from "react-icons/fa"
@@ -6,6 +6,8 @@ import { LuPackage } from "react-icons/lu"
 import { IoReceiptOutline, IoSettingsOutline  } from "react-icons/io5"
 import { FiSidebar } from "react-icons/fi";
 import logoWord from '@/assets/wf_logoword.png'
+import { useAppDispatch } from "../../store/hooks"
+import { logoutUser } from "../../store/slices/authSlice"
 
 const navItems = [
   { to: "/admin/dashboard", icon: MdOutlineSpaceDashboard, label: "Dashboard" },
@@ -17,6 +19,8 @@ const navItems = [
 
 const AdminSideBar = () => {
   const [isExpanded, setIsExpanded] = useState(true)
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
   return (
     <aside
@@ -79,8 +83,14 @@ const AdminSideBar = () => {
             <span className="text-sm text-gray-500 whitespace-nowrap">Admin Manager</span>
           </div>
         </div>
-        <button className={`flex items-center gap-3 p-2 rounded hover:bg-gray-100 transition-colors
+        <button 
+          className={`flex items-center gap-3 p-2 rounded hover:bg-gray-100 transition-colors
           ${isExpanded ? "justify-start" : "justify-center"}`}
+          onClick={async () => {
+            await dispatch(logoutUser())
+            localStorage.removeItem('token')
+            navigate('/auth/login')
+          }}
         >
           <MdLogout className="text-xl shrink-0" />
           <span className={`text-sm font-medium whitespace-nowrap overflow-hidden

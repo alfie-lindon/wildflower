@@ -16,23 +16,34 @@ import Users from "./pages/admin/users/Users";
 import AdminProducts from "./pages/admin/products/AdminProducts";
 import Orders from "./pages/admin/orders/Orders";
 import Settings from "./pages/admin/settings/Settings";
+import AdminRoute from "./components/AdminRoute";
+// import ProtectedRoute from "./components/ProtectedRoute";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
-      <Route path="/admin" element={ <AdminLayout /> } >
-        <Route path="dashboard" element={ <Dashboard /> } />
-        <Route path="users" element={ <Users /> } />
-        <Route path="products" element={ <AdminProducts /> } />
-        <Route path="orders" element={ <Orders /> } />
-        <Route path="settings" element={ <Settings /> } />
+      {/* Admin Routes*/}
+      <Route element={<AdminRoute />}>
+        <Route path="/admin" element={ <AdminLayout /> } >
+          <Route path="dashboard" element={ <Dashboard /> } />
+          <Route path="users" element={ <Users /> } />
+          <Route path="products" element={ <AdminProducts /> } />
+          <Route path="orders" element={ <Orders /> } />
+          <Route path="settings" element={ <Settings /> } />
+        </Route>
       </Route>
 
+      {/* Authenticated Users route (To follow) */}
+      {/* <Route element={<ProtectedRoute />}>
+        <Route path="/" element={ <UserLayout /> } >
+        </Route>
+      </Route> */}
+
+      {/* Guest Routes */}
       <Route path="/" element={ <UserLayout /> } >
         <Route index element={ <Home /> } />
         <Route path="/products" element={ <Products /> } />
       </Route>
-
       <Route path="/auth" element={ <AuthLayout /> } >
         <Route path="login" element={ <Login /> } />
         <Route path="signup" element={ <SignUp /> } />

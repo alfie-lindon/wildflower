@@ -36,6 +36,9 @@ const Login = () => {
       const { data } = await api.post('/login', formData)
       dispatch(setUser(data.user))
       localStorage.setItem('token', data.token)
+      if(data.user.is_admin){
+        return navigate('/admin/dashboard')
+      }
       navigate('/')
     } catch (err) {
       if (axios.isAxiosError(err)) {
