@@ -11,9 +11,10 @@ class AdminController extends Controller
     {
         try{
             // Get all users
-            User::all();
+            $users = User::all();
             // Return response
             return response()->json([
+                'users' => $users,
                 'message' => "Data fetched."
             ],200);
         }catch(\Exception $e){

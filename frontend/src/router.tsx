@@ -12,7 +12,7 @@ import SignUp from "./pages/auth/SignUp";
 import ResetPassword from "./pages/auth/ResetPassword";
 import AdminLayout from "./layouts/AdminLayout";
 import Dashboard from "./pages/admin/dashboard/Dashboard";
-import Users from "./pages/admin/users/Users";
+import Users from "./pages/admin/users/Index";
 import AdminProducts from "./pages/admin/products/AdminProducts";
 import Orders from "./pages/admin/orders/Orders";
 import Settings from "./pages/admin/settings/Settings";
