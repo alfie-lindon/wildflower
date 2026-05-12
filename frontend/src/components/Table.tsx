@@ -16,6 +16,7 @@ interface Column {
 
 interface Action {
   label: string
+  mode: string | null
 }
 
 interface TableProps {
@@ -23,9 +24,10 @@ interface TableProps {
   columns: Column[],
   actions: Action[]
   onRefresh?: () => void
+  formOpen: (mode: string) => void
 }
 
-const Table = ({data, columns, onRefresh, actions}: TableProps) => {
+const Table = ({data, columns, actions, onRefresh, formOpen}: TableProps) => {
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
   const itemsPerPage = 8
@@ -109,21 +111,12 @@ const Table = ({data, columns, onRefresh, actions}: TableProps) => {
               <LuRefreshCcw size={18} className={isRefreshing ? 'animate-spin text-burgundy': ''} />
             </button>
             <button
-              onClick={()=>document.getElementById('my_modal_2').showModal()}
+              onClick={() => formOpen('new')}
               className="btn bg-burgundy text-white rounded-lg"
             >
               <LuPlus size={16} />
               Add User
             </button>
-            <dialog id="my_modal_2" className="modal">
-              <div className="modal-box">
-                <h3 className="font-bold text-lg">Hello!</h3>
-                <p className="py-4">Press ESC key or click outside to close</p>
-              </div>
-              <form method="dialog" className="modal-backdrop">
-                <button>close</button>
-              </form>
-            </dialog>
           </div>
         </div>
       </div>
@@ -185,7 +178,9 @@ const Table = ({data, columns, onRefresh, actions}: TableProps) => {
                         <ul tabIndex={-1} className="dropdown-content menu bg-base-100 rounded-box z-1 w-32 p-2 shadow-sm">
                           {actions.map((action) => (
                             <li key={action.label}>
-                              <a>{action.label}</a>
+                              <a onClick={() => action.mode && formOpen(action.mode)}>
+                                {action.label}
+                              </a>
                             </li>
                           ))}
                         </ul>

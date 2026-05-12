@@ -6,7 +6,7 @@ import { LuPackage } from "react-icons/lu"
 import { IoReceiptOutline, IoSettingsOutline  } from "react-icons/io5"
 import { FiSidebar } from "react-icons/fi";
 import logoWord from '@/assets/wf_logoword.png'
-import { useAppDispatch } from "../../store/hooks"
+import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import { logoutUser } from "../../store/slices/authSlice"
 
 const navItems = [
@@ -21,6 +21,7 @@ const AdminSideBar = () => {
   const [isExpanded, setIsExpanded] = useState(true)
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+  const user = useAppSelector(state => state.auth.user)
 
   return (
     <aside
@@ -79,8 +80,8 @@ const AdminSideBar = () => {
           <div className={`overflow-hidden transition-all duration-300 ease-in-out
             ${isExpanded ? "w-36 opacity-100" : "w-0 opacity-0"}`}
           >
-            <p className="font-bold leading-tight whitespace-nowrap">Admin</p>
-            <span className="text-sm text-gray-500 whitespace-nowrap">Admin Manager</span>
+            <p className="font-bold leading-tight whitespace-nowrap">{user?.name}</p>
+            <span className="text-sm text-gray-500 whitespace-nowrap">{user?.email}</span>
           </div>
         </div>
         <button 
