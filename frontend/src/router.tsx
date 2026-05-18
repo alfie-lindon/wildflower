@@ -13,7 +13,7 @@ import ResetPassword from "./pages/auth/ResetPassword";
 import AdminLayout from "./layouts/AdminLayout";
 import Dashboard from "./pages/admin/dashboard/Dashboard";
 import Users from "./pages/admin/users/Index";
-import AdminProducts from "./pages/admin/products/AdminProducts";
+import AdminProducts from "./pages/admin/products/Index";
 import Orders from "./pages/admin/orders/Orders";
 import Settings from "./pages/admin/settings/Settings";
 import AdminRoute from "./components/AdminRoute";

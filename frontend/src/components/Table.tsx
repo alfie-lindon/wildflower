@@ -24,7 +24,7 @@ interface TableProps {
   columns: Column[],
   actions: Action[]
   onRefresh?: () => void
-  formOpen: (mode: string) => void
+  formOpen: (mode: string, row?: Record<string, unknown>) => void
 }
 
 const Table = ({data, columns, actions, onRefresh, formOpen}: TableProps) => {
@@ -115,7 +115,7 @@ const Table = ({data, columns, actions, onRefresh, formOpen}: TableProps) => {
               className="btn bg-burgundy text-white rounded-lg"
             >
               <LuPlus size={16} />
-              Add User
+              Add
             </button>
           </div>
         </div>
@@ -178,7 +178,7 @@ const Table = ({data, columns, actions, onRefresh, formOpen}: TableProps) => {
                         <ul tabIndex={-1} className="dropdown-content menu bg-base-100 rounded-box z-1 w-32 p-2 shadow-sm">
                           {actions.map((action) => (
                             <li key={action.label}>
-                              <a onClick={() => action.mode && formOpen(action.mode)}>
+                              <a onClick={() => action.mode && formOpen(action.mode, row)}>
                                 {action.label}
                               </a>
                             </li>

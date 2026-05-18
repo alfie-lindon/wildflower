@@ -14,12 +14,20 @@ use Illuminate\Support\Facades\Auth;
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
-// Product Routes, no middleware for now
-Route::get('/index', [ProductController::class, 'index']);
-Route::get('/getProductById/{product}', [ProductController::class, 'getProductById']);
-Route::post('/store', [ProductController::class, 'store']);
-Route::put('/update/{product}', [ProductController::class, 'update']);
-Route::post('/destroy/{product}', [ProductController::class, 'destroy']);
+// Product Routes (Grouped)
+Route::prefix('product')->controller(ProductController::class)->group(function (){
+    Route::get('/index', 'index');
+    Route::get('/getProductById/{product}', 'getProductById');
+    Route::post('/store', 'store');
+    Route::put('/update/{product}');
+    Route::post('/destroy/{product}', 'destroy');
+});
+
+// Route::get('/index', [ProductController::class, 'index']);
+// Route::get('/getProductById/{product}', [ProductController::class, 'getProductById']);
+// Route::post('/store', [ProductController::class, 'store']);
+// Route::put('/update/{product}', [ProductController::class, 'update']);
+// Route::post('/destroy/{product}', [ProductController::class, 'destroy']);
 
 // Admin Routes
 Route::middleware('auth:sanctum', 'admin')->group(function(){
