@@ -20,7 +20,7 @@ Route::prefix('product')->controller(ProductController::class)->group(function (
     Route::get('/getProductById/{product}', 'getProductById');
     Route::post('/store', 'store');
     Route::put('/update/{product}');
-    Route::post('/destroy/{product}', 'destroy');
+    Route::post('/destroy/{product?}', 'destroy'); //? to make binding optional so id and ids can use this enpoint
 });
 
 // Route::get('/index', [ProductController::class, 'index']);

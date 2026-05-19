@@ -5,7 +5,8 @@ import {
   LuPlus,
   LuChevronLeft,
   LuChevronRight,
-  LuCircleEllipsis 
+  LuCircleEllipsis,
+  LuTrash
 } from "react-icons/lu";
 
 interface Column {
@@ -24,10 +25,11 @@ interface TableProps {
   columns: Column[],
   actions: Action[]
   onRefresh?: () => void
+  onDelete: (ids: string[]) => void
   formOpen: (mode: string, row?: Record<string, unknown>) => void
 }
 
-const Table = ({data, columns, actions, onRefresh, formOpen}: TableProps) => {
+const Table = ({data, columns, actions, onRefresh, onDelete, formOpen}: TableProps) => {
   const [search, setSearch] = useState('')
   const [page, setPage] = useState(1)
   const itemsPerPage = 8
@@ -104,6 +106,17 @@ const Table = ({data, columns, actions, onRefresh, formOpen}: TableProps) => {
             />
           </div>
           <div className="flex items-center gap-3">
+            { selectedIds.size > 0 && (
+              <button
+                onClick={() => {
+                  onDelete([...selectedIds])
+                  setSelectedIds(new Set()) //Clear selected ids
+                }}
+                className="btn btn-sm rounded-lg"
+              >
+                <LuTrash size={18} className="text-red-500" />
+              </button>
+            )}
             <button
               onClick={handleRefresh}
               className="btn btn-sm rounded-lg"

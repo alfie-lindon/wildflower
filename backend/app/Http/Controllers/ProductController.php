@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 use function Pest\Laravel\json;
 
@@ -88,20 +89,55 @@ class ProductController extends Controller
         }
     }
 
-    public function destroy(Product $product)
+    public function destroy(Request $request, Product $product = null)
     {
-        // Delete product
-        try{
-            $row = $product->delete();
+        try {
+            DB::beginTransaction();
+
+            $multiple = (bool) $request->input('multiple');
+
+            if ($multiple) {
+                $ids = (array) $request->input('ids', []);
+                $count = Product::whereIn('id', $ids)->delete();
+                $deletedIds = $ids;
+            } else {
+                $product->delete();
+                $count = 1;
+                $deletedIds = [$product->id];
+            }
+
+            DB::commit();
 
             return response()->json([
-                'row' => $row,
-            ],200);
-        }catch(\Exception $e){
+                $multiple ? 'ids' : 'id' =>
+                    $multiple ? $deletedIds : ($deletedIds[0] ?? null),
+                'message' => "{$count} Product" .
+                    ($count === 1 ? '' : 's') .
+                    " deleted successfully.",
+            ], 200);
+
+        } catch (\Exception $e) {
+            DB::rollBack();
             return response()->json([
-                'success' => false,
-                'message' => 'Something went wrong ' . $e
-            ],500);
+                'error' => $e->getMessage(),
+            ], 500);
         }
     }
+
+    // public function destroy(Product $product)
+    // {
+    //     // Delete product
+    //     try{
+    //         $row = $product->delete();
+
+    //         return response()->json([
+    //             'row' => $row,
+    //         ],200);
+    //     }catch(\Exception $e){
+    //         return response()->json([
+    //             'success' => false,
+    //             'message' => 'Something went wrong ' . $e
+    //         ],500);
+    //     }
+    // }
 }

@@ -32,16 +32,39 @@ const Index = () => {
   }, []) //Call fetch on mount
 
   const openModal = (mode: string, row?: Record<string, unknown>) => {
-    console.log('openModal called:', mode, row)
+    if (mode === 'delete') {
+      handleDelete([String(row?.id)])
+      return
+    }
     setFormMode(mode)
     setRow(row ? row as unknown as Product : null);
     (document.getElementById('my_form') as HTMLDialogElement)?.showModal();
   }
 
+  const handleDelete = async(ids: string[]) => {
+    if (ids.length === 0) return
+    
+    const multiple = ids.length > 1
+
+    try {
+      if (multiple) {
+        await api.post(`/product/destroy`, {
+          multiple: true,
+          ids: ids
+        })
+      } else {
+        await api.post(`/product/destroy/${ids[0]}`)
+      }
+      await getData() // Re-fetch data after deletion of items
+    } catch (error) {
+      console.error('Delete failed', error)
+    }
+  }
+
   const actions = [
     { label: 'View', mode: 'view' },
     { label: 'Edit', mode: 'edit' },
-    { label: 'Delete', mode: null },
+    { label: 'Delete', mode: 'delete' },
   ]
 
   const columns = [
@@ -58,6 +81,7 @@ const Index = () => {
         columns={columns} 
         actions={actions}
         onRefresh={getData}
+        onDelete={handleDelete}
         formOpen={openModal}
       />
       
