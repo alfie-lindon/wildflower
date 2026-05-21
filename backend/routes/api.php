@@ -19,15 +19,9 @@ Route::prefix('product')->controller(ProductController::class)->group(function (
     Route::get('/index', 'index');
     Route::get('/getProductById/{product}', 'getProductById');
     Route::post('/store', 'store');
-    Route::put('/update/{product}');
+    Route::post('/update/{product}', 'update');
     Route::post('/destroy/{product?}', 'destroy'); //? to make binding optional so id and ids can use this enpoint
 });
-
-// Route::get('/index', [ProductController::class, 'index']);
-// Route::get('/getProductById/{product}', [ProductController::class, 'getProductById']);
-// Route::post('/store', [ProductController::class, 'store']);
-// Route::put('/update/{product}', [ProductController::class, 'update']);
-// Route::post('/destroy/{product}', [ProductController::class, 'destroy']);
 
 // Admin Routes
 Route::middleware('auth:sanctum', 'admin')->group(function(){

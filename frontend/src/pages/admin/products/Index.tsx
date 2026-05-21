@@ -15,12 +15,13 @@ interface Product {
 
 const Index = () => {
   const title = 'Product'
+  const URL = 'product'
   const [products, setProducts] = useState<Product[]>([])
   const [formMode, setFormMode] = useState("new")
   const [row, setRow] = useState<Product | null>(null)
 
   const getData = async () => {
-    const { data } = await api.get('/product/index')
+    const { data } = await api.get(URL + '/index')
     setProducts(data.products)
   }
 
@@ -39,6 +40,11 @@ const Index = () => {
     setFormMode(mode)
     setRow(row ? row as unknown as Product : null);
     (document.getElementById('my_form') as HTMLDialogElement)?.showModal();
+  }
+
+  const closeModal = () => {
+    (document.getElementById('my_form') as HTMLDialogElement)?.close()
+    getData()
   }
 
   const handleDelete = async(ids: string[]) => {
@@ -88,7 +94,9 @@ const Index = () => {
       <Form 
         row={row}
         title={title}
+        url={URL}
         mode={formMode}
+        onSuccess={closeModal}
       />
     </>
   )

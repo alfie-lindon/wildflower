@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 use function Pest\Laravel\json;
 
@@ -42,8 +43,15 @@ class ProductController extends Controller
         }
     }
 
-    public function store()
+    public function store(Request $request)
     {
+        // Set Image path and storage
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $filename = time() . '_' . $request->file('image')->getClientOriginalName();
+            $imagePath = $request->file('image')->storeAs('products', $filename, 'public');
+        }
+
         // Store product
         try{
             $product = Product::create([
@@ -51,6 +59,7 @@ class ProductController extends Controller
                 'description' => request('description'),
                 'price' => request('price'),
                 'quantity' => request('quantity'),
+                'image_url' => $imagePath,
             ]);
 
             return response()->json([
@@ -65,16 +74,28 @@ class ProductController extends Controller
         }
     }
 
-    public function update(Product $product)
+    public function update(Product $product, Request $request)
     {
         // Update product
         try{
+
+            $imagePath = $product->image_url; // keep existing image by default
+
+            if ($request->hasFile('image')) {
+                // Delete old image first
+                if ($product->image_url) {
+                    Storage::disk('public')->delete($product->image_url);
+                }
+                $filename = time() . '_' . $request->file('image')->getClientOriginalName();
+                $imagePath = $request->file('image')->storeAs('products', $filename, 'public');
+            }
 
             $row = $product->update([
                 'name' => request('name'),
                 'description' => request('description'),
                 'price' => request('price'),
                 'quantity' => request('quantity'),
+                'image_url' => $imagePath,
             ]);
 
             return response()->json([
@@ -98,6 +119,12 @@ class ProductController extends Controller
 
             if ($multiple) {
                 $ids = (array) $request->input('ids', []);
+                // Delete images before deleting records
+                Product::whereIn('id', $ids)->each(function ($product) {
+                    if ($product->image_url) {
+                        Storage::disk('public')->delete($product->image_url);
+                    }
+                });
                 $count = Product::whereIn('id', $ids)->delete();
                 $deletedIds = $ids;
             } else {
